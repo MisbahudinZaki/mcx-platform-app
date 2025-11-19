@@ -37,7 +37,7 @@
                         <div class="d-flex flex-column gap-2 position-relative password-wrapper">
                             <label for="password">Password</label>
                             <input type="password" name="password" placeholder="Input your Password" id="password" required>
-                            <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
+                            <i class="bi bi-eye-fill toggle-password" id="togglePassword"></i>
                         </div>
 
                         <button type="submit" class="btn btn-login w-100 btn-accent" id="loginBtn" disabled>Login</button>

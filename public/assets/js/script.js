@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
     togglePassword.addEventListener('click', () => {
         const isPassword = passwordInput.getAttribute('type') === 'password';
         passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
-        togglePassword.classList.toggle('fa-eye');
-        togglePassword.classList.toggle('fa-eye-slash');
+        togglePassword.classList.toggle('bi-eye-fill');
+        togglePassword.classList.toggle('bi-eye-slash');
     });
 
     // === Enable/Disable Login Button ===
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
     passwordInput.addEventListener('input', toggleButtonState);
 });
 
-// document.getElementById("btn-toggle-sidebar").addEventListener("click", function() {
-//     const sidebar = document.getElementById("sidebar");
-//     sidebar.classList.toggle("collapsed");
-// });
+document.getElementById("btn-toggle-sidebar").addEventListener("click", function() {
+    const sidebar = document.getElementById("sidebar");
+    sidebar.classList.toggle("collapsed");
+});

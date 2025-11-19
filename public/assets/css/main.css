@@ -388,6 +388,10 @@ box-shadow: 0 0 0 3px #18181833; /* efek stroke outside */
     width: 70px;
 }
 
+.sidebar.collapsed .menu-item span{
+    display: none;
+}
+
 .sidebar-header {
     display: flex;
     justify-content: space-between;
@@ -426,6 +430,11 @@ box-shadow: 0 0 0 3px #18181833; /* efek stroke outside */
     color: var(--text-color);
     margin-bottom: 6px;
     transition: background .2s, padding .25s;
+    font-size: 14px;
+}
+
+.menu-item i{
+    font-size: 14px;
 }
 
 .menu-item:hover {
@@ -454,10 +463,6 @@ box-shadow: 0 0 0 3px #18181833; /* efek stroke outside */
     transition: margin-left .25s ease;
     padding: 20px 20px;
     border-radius: 12px;
-}
-
-.dashboard-main-body {
-    padding: 25px;
 }
 
 /* Modal */
@@ -516,4 +521,30 @@ box-shadow: 0 0 0 3px #18181833; /* efek stroke outside */
     justify-content: flex-end; /* align ke ujung kanan */
     gap: 10px;
     border-top: 1px solid #e5e5e5;
+}
+
+/* Table */
+
+.table-content {
+    position: relative;
+    border-radius: 12px;
+    border: 1px solid var(--accent-color-5);
+    overflow: hidden; /* penting biar thead ikut melengkung */
+}
+
+.table-content .table-head th {
+    background-color: var(--accent-color-3) !important;
+    color: var(--primary);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 16px 16px !important;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--accent-color-5);
+}
+
+.table-content .table-body td{
+    background-color: var(--secondary);
+    font-size: 14px;
+    font-weight: 400;
+    padding: 20px 20px;
 }

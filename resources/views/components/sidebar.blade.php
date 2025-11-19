@@ -1,8 +1,3 @@
-@php
-    $group = Auth::user()->group ?? 'obn'; // sesuaikan field 'group' user-mu
-    $menus = config('menu')[$group] ?? [];
-@endphp
-
 <aside id="sidebar" class="sidebar">
     <div class="sidebar-header">
         <span class="logo">
@@ -22,8 +17,7 @@
                     @isset($menu['icon'])
                         <i class="{{ $menu['icon'] }}"></i>
                     @endisset
-
-                    {{ $menu['title'] }}
+                    <span>{{ $menu['title'] }}</span>
                 </a>
             </li>
         @endforeach
