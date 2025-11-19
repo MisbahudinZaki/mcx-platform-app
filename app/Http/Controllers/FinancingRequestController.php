@@ -2,57 +2,106 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FinacingRequest;
+use App\Models\FinancingRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FinancingRequestController extends Controller
 {
     public function index(){
-        $user = auth()->user();
-
-        $request = FinacingRequest::where('user_id', $user->id)->get();
+        $request = FinancingRequest::with(['branch','user'])->latest()->paginate(20);
 
         return response()->json($request);
     }
 
-    public function show(){
-        $user = auth()->user();
-
-        $req = FinacingRequest::where('user_id', $user->id)->findOrFail($id);
-
-        return response()->json($req);
+    public function show(FinancingRequest $financingRequest)
+    {
+        return response()->json(
+            $financingRequest->load(['branch', 'user'])
+        );
     }
 
     public function store(Request $request){
-        $request->validate([
+        $validated = $request->validate([
+            'branch_id'         => 'required|exists:branches,id',
             'counterparty_name' => 'required|string|max:255',
-            'financing_amount' => 'required|numeric|min:1',
-            'maturity_date' => 'required|date|after:today',
-
-            'approval_note' => 'required|file|mimes:pdf|max:5120',
-            'request_letter' => 'required|file|mimes:pdf|max:5120',
+            'financing_amount'  => 'required|numeric',
+            'currency'          => 'required|string|max:10',
+            'rate_type'         => 'required|string|max:100',
+            'maturity_date'     => 'required|date',
+            'approval_note'     => 'required|file|mimes:pdf',
+            'request_letter'    => 'required|file|mimes:pdf',
         ]);
 
-        $user = auth()->user();
+        $validated['transaction_id'] = 'TRX' . time();
 
-        $approvalNotePath = $request->file('approval_note')->store('financing/approval_notes', 'public');
-        $requestLetterPath = $request->file('request_letter')->store('financing/request_letters', 'public');
+        $validated['user_id'] = auth()->id();
 
-        $req = FinacingRequest::create([
-            'branch_id' => $user->branch_id,
-            'user_id' => $user->id,
-            'counterparty_name' => $request->counterparty_name,
-            'financing_amount' => $request->financing_amount,
-            'currency' => "USD",
-            'rate_type' => "Rate Financing",
-            'maturity_date' => $request->maturity_date,
-            'approval_note' => $approvalNotePath,
-            'request_letter' => $requestLetterPath,
+        $validated['approval_note']  = $request->file('approval_note')->store('approval_notes');
+        $validated['request_letter'] = $request->file('request_letter')->store('request_letters');
+
+        $fr = FinancingRequest::create($validated);
+
+        return response()->json($fr, 201);
+    }
+
+     public function update(Request $request, FinancingRequest $financingRequest)
+    {
+        $validated = $request->validate([
+            'counterparty_name' => 'sometimes|required|string|max:255',
+            'financing_amount'  => 'sometimes|required|numeric',
+            'currency'          => 'sometimes|required|string|max:10',
+            'rate_type'         => 'sometimes|required|string|max:100',
+            'maturity_date'     => 'sometimes|required|date',
+            'financing_rate'    => 'nullable|numeric',
+
+            // Optional file upload
+            'approval_note'     => 'nullable|file|mimes:pdf',
+            'request_letter'    => 'nullable|file|mimes:pdf',
         ]);
 
-        return response()->json([
-            'message' => 'Financing request created',
-            'data' => $req,
-        ]);
+        if ($request->hasFile('approval_note')) {
+            Storage::delete($financingRequest->approval_note);
+            $validated['approval_note'] = $request->file('approval_note')->store('approval_notes');
+        }
+
+        if ($request->hasFile('request_letter')) {
+            Storage::delete($financingRequest->request_letter);
+            $validated['request_letter'] = $request->file('request_letter')->store('request_letters');
+        }
+
+        $financingRequest->update($validated);
+
+        return response()->json($financingRequest);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(FinancingRequest $financingRequest)
+    {
+        // delete file
+        Storage::delete($financingRequest->approval_note);
+        Storage::delete($financingRequest->request_letter);
+
+        $financingRequest->delete();
+
+        return response()->json(['message' => 'Deleted']);
+    }
+
+    /**
+     * Download Approval Note
+     */
+    public function downloadApprovalNote(FinancingRequest $financingRequest)
+    {
+        return Storage::download($financingRequest->approval_note);
+    }
+
+    /**
+     * Download Request Letter
+     */
+    public function downloadRequestLetter(FinancingRequest $financingRequest)
+    {
+        return Storage::download($financingRequest->request_letter);
     }
 }

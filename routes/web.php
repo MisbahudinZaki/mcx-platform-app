@@ -20,3 +20,11 @@ Route::middleware(['auth', 'role:BU'])->group(function () {
 
     Route::get('/dashboard', [BUController::class, 'dashboard'])->name('bu.dashboard');
 });
+
+Route::resource('financing-requests', FinancingRequestController::class);
+
+Route::get('financing-requests/{financingRequest}/download/approval-note', 
+    [FinancingRequestController::class, 'downloadApprovalNote']);
+
+Route::get('financing-requests/{financingRequest}/download/request-letter', 
+    [FinancingRequestController::class, 'downloadRequestLetter']);

@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class FinacingRequest extends Model
+class FinancingRequest extends Model
 {
     protected $fillable = [
+        'transaction_id',
         'branch_id',
         'user_id',
         'counterparty_name',
@@ -16,9 +17,10 @@ class FinacingRequest extends Model
         'maturity_date',
         'approval_note',
         'request_letter',
+        'financing_rate',
         'status',
     ];
-
+    
     public function branch()
     {
         return $this->belongsTo(Branch::class);

@@ -245,12 +245,7 @@ box-shadow: 0 0 0 3px #18181833; /* efek stroke outside */
     transform: translateY(-50%);
     cursor: pointer;
     color: var(--primary);
-    font-size: 16px;
-    transition: color 0.2s ease;
-}
-
-.password-wrapper .toggle-password:hover {
-    color: var(--accent-color-2);
+    font-size: 18px;
 }
 
 .auth-footer{

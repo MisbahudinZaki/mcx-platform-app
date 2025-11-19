@@ -13,10 +13,19 @@ return new class extends Migration
     {
         Schema::create('branches', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique();   // Example: ID-JKT, SG-SIN
-            $table->string('name'); 
-            $table->string('country');
-            $table->string('city');
+            
+            // Basic Info
+            $table->string('name');           // ex: Bank Mandiri Singapore
+            $table->string('status');         // Available / Cut Off
+
+            $table->decimal('available_nostro', 15, 2)->nullable();
+            $table->decimal('tf_exposure', 15, 2)->nullable();
+            $table->decimal('suggested_rate', 5, 2)->nullable();
+            $table->decimal('cof', 5, 2)->nullable();
+            $table->decimal('cof_margin', 5, 2)->nullable();
+
+            $table->string('remark')->nullable();
+            $table->unsignedTinyInteger('match_confidence')->nullable(); // 0–100%
             $table->timestamps();
         });
     }
