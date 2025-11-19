@@ -7,5 +7,5 @@
 {{-- Custom JS --}}
 <script src="{{ asset('assets/js/script.js') }}"></script>
 <script src="{{ asset('assets/js/swiper-script.js') }}"></script>
-<script src="{{ asset('assets/js/chart/branchPerformanceChart.js') }}"></script>
-<script src="{{ asset('assets/js/chart/positionForecastChart.js') }}"></script>
+{{-- <script src="{{ asset('assets/js/chart/branchPerformanceChart.js') }}"></script>
+<script src="{{ asset('assets/js/chart/positionForecastChart.js') }}"></script> --}}

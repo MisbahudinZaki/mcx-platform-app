@@ -13,7 +13,7 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::middleware(['auth:sanctum', 'role:BU'])->group(function () {
+Route::middleware(['auth', 'role:BU'])->group(function () {
     Route::post('/financing-request', [FinancingRequestController::class, 'store']);
     Route::get('/financing-request', [FinancingRequestController::class, 'index']);
     Route::get('/financing-request/{id}', [FinancingRequestController::class, 'show']);

@@ -1,15 +1,24 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const modal = document.getElementById('loginFailedModal');
-    const closeBtn = document.getElementById('closeLoginFailedModalBtn');
+document.addEventListener("DOMContentLoaded", function () {
+    const loginFailedModal = document.getElementById("loginFailedModal");
 
-    if (modal && closeBtn) {
-        closeBtn.addEventListener('click', () => {
-            modal.style.opacity = '0';
-            modal.style.visibility = 'hidden';
-            setTimeout(() => modal.remove(), 300);
-        });
+    if (loginFailedModal) {
+        // modal visible
+        loginFailedModal.classList.add("show");
     }
 });
+
+function closeModal(id) {
+    const modal = document.getElementById(id);
+
+    if (!modal) return;
+
+    modal.classList.remove("show");
+
+    // kasih delay agar animasinya sempat jalan
+    setTimeout(() => {
+        modal.style.visibility = "hidden";
+    }, 300);
+}
 
 document.addEventListener('DOMContentLoaded', function() {
     // === Password Toggle ===
@@ -39,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
     passwordInput.addEventListener('input', toggleButtonState);
 });
 
-document.getElementById("btn-toggle-sidebar").addEventListener("click", function() {
-    const sidebar = document.getElementById("sidebar");
-    sidebar.classList.toggle("collapsed");
-});
+// document.getElementById("btn-toggle-sidebar").addEventListener("click", function() {
+//     const sidebar = document.getElementById("sidebar");
+//     sidebar.classList.toggle("collapsed");
+// });

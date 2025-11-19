@@ -55,18 +55,16 @@
 </div>
 
 @if (session('modal'))
-    <x-modal id="loginFailedModal" :show="true">
-        <x-slot name="header">
-            <h3>{{ session('modal.title') ?? 'Login Failed' }}</h3>
-        </x-slot>
+    <x-modal id="loginFailedModal">
+        <x-slot:header>
+            <h3>Login Failed</h3>
+        </x-slot:header>
 
-        <p>{{ session('modal.message') ?? 'Please make sure your username or password is correct.' }}</p>
+        <p>Please sure your username and password are correct</p>
 
-        <x-slot name="footer">
-            <button id="closeLoginFailedModalBtn" class="btn btn-accent-primary">
-                {{ session('modal.button') ?? 'OK' }}
-            </button>
-        </x-slot>
+        <x-slot:footer>
+            <button onclick="closeModal('loginFailedModal')">Tutup</button>
+        </x-slot:footer>
     </x-modal>
 @endif
 

@@ -308,6 +308,70 @@ box-shadow: 0 0 0 3px #18181833; /* efek stroke outside */
     overflow: hidden;
 }
 
+/* WRAPPER UTAMA */
+.dashboard-header {
+    width: 100%;
+    padding: 16px 0;
+    margin-bottom: 20px;
+}
+
+/* FLEX UTAMA */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* BAGIAN KIRI (TITLE & SUBTITLE) */
+.header-left .page-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+    color: #222;
+}
+
+.header-left .page-subtitle {
+    font-size: 14px;
+    color: #777;
+    margin-top: 4px;
+    margin-bottom: 0;
+}
+
+/* BAGIAN KANAN (USER STATUS) */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-right img {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* USER INFO (NAME + ROLE) */
+.user-info {
+    line-height: 1.2;
+}
+
+.user-info .user-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #222;
+}
+
+.user-info .user-role {
+    font-size: 12px;
+    color: #888;
+    text-transform: uppercase;
+}
+
+/* DROPDOWN */
+.dropdown-menu {
+    min-width: 140px;
+    border-radius: 8px;
+}
+
 /* Sidebar */
 .sidebar {
     width: 260px;
@@ -327,14 +391,11 @@ box-shadow: 0 0 0 3px #18181833; /* efek stroke outside */
 .sidebar-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: end;
 }
 
 .sidebar .logo {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--primary);
-    transition: opacity .2s;
+    max-width: 75%;
 }
 
 .sidebar.collapsed .logo {
@@ -368,7 +429,15 @@ box-shadow: 0 0 0 3px #18181833; /* efek stroke outside */
 }
 
 .menu-item:hover {
-    background: var(--accent-color-4);
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.menu-item.active{
+    color: var(--primary);
+    font-weight: 600;
+    background-color: var(--accent-color-4);
+    border: 1px solid var(--accent-color-5);
 }
 
 .sidebar.collapsed .menu-item {
@@ -383,8 +452,68 @@ box-shadow: 0 0 0 3px #18181833; /* efek stroke outside */
     height: 100vh;
     overflow-y: auto;
     transition: margin-left .25s ease;
+    padding: 20px 20px;
+    border-radius: 12px;
 }
 
 .dashboard-main-body {
     padding: 25px;
+}
+
+/* Modal */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0);
+    display: flex;         /* Biar bisa di-animate */
+    visibility: hidden;    /* Biar tidak bisa diklik */
+    opacity: 0;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity 0.3s ease, background 0.3s ease;
+}
+
+.modal.show {
+    background: rgba(0,0,0,0.4);
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: #ffffff;
+    border-radius: 12px;
+    min-width: 420px;
+    max-width: 90%;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.modal.show .modal-content {
+    opacity: 1;
+    transform: translateY(0px);
+}
+
+.modal-header {
+    background: #f8f8f8;
+    padding: 16px 20px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.modal-body {
+    background: #ffffff;
+    padding: 20px 20px 0px 20px;
+}
+
+.modal-footer {
+    background: #ffffff;
+    padding: 0px 20px 20px 20px;
+
+    display: flex;
+    justify-content: flex-end; /* align ke ujung kanan */
+    gap: 10px;
+    border-top: 1px solid #e5e5e5;
 }
