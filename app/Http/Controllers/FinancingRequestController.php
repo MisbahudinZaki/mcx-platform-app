@@ -4,45 +4,51 @@ namespace App\Http\Controllers;
 
 use App\Models\FinancingRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class FinancingRequestController extends Controller
 {
-    public function index(){
-        $request = FinancingRequest::with(['branch','user'])->latest()->paginate(20);
+    public function index() {
+        $financings = FinancingRequest::with(['user'])->latest()->paginate(20);
 
-        return response()->json($request);
+        return view('role.bu.financing', compact('financings'));
     }
 
     public function show(FinancingRequest $financingRequest)
     {
         return response()->json(
-            $financingRequest->load(['branch', 'user'])
+            $financingRequest->load(['user'])
         );
     }
 
     public function store(Request $request){
         $validated = $request->validate([
-            'branch_id'         => 'required|exists:branches,id',
             'counterparty_name' => 'required|string|max:255',
             'financing_amount'  => 'required|numeric',
             'currency'          => 'required|string|max:10',
             'rate_type'         => 'required|string|max:100',
+            'open_date'         => 'required|date',
             'maturity_date'     => 'required|date',
-            'approval_note'     => 'required|file|mimes:pdf',
-            'request_letter'    => 'required|file|mimes:pdf',
+            'approval_note'     => 'required|file|max:10240',
+            'request_letter'    => 'required|file|max:10240',
         ]);
 
-        $validated['transaction_id'] = 'TRX' . time();
+        $validated['transaction_id'] = 'FO-' . now()->format('Y-m');
+        $validated['user_id'] = Auth::id();
 
-        $validated['user_id'] = auth()->id();
+        if ($request->hasFile('approval_note')) {
+            $validated['approval_note'] = $request->file('approval_note')->store('approval_notes', 'public');
+        }
 
-        $validated['approval_note']  = $request->file('approval_note')->store('approval_notes');
-        $validated['request_letter'] = $request->file('request_letter')->store('request_letters');
+        if ($request->hasFile('request_letter')) {
+            $validated['request_letter'] = $request->file('request_letter')->store('request_letters', 'public');
+        }
 
-        $fr = FinancingRequest::create($validated);
+        FinancingRequest::create($validated);
 
-        return response()->json($fr, 201);
+        return redirect()->route('financing-requests.index')->with('success', 'Request created!');
+
     }
 
      public function update(Request $request, FinancingRequest $financingRequest)

@@ -22,7 +22,6 @@ class User extends Authenticatable
         'username',
         'password',
         'role',
-        'branch_id',
     ];
 
     public function username()

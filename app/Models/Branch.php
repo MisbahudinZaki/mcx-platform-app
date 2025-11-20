@@ -22,9 +22,4 @@ class Branch extends Model
         return $this->hasMany(User::class);
     }
 
-    public function financingRequests()
-    {
-        return $this->hasMany(FinacingRequest::class);
-    }
-
 }

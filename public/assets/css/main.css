@@ -460,6 +460,12 @@ box-shadow: 0 0 0 3px #18181833; /* efek stroke outside */
     border-radius: 12px;
 }
 
+.dashboard-main-body{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 /* Modal */
 
 .modal {
@@ -542,4 +548,114 @@ box-shadow: 0 0 0 3px #18181833; /* efek stroke outside */
     font-size: 14px;
     font-weight: 400;
     padding: 20px 20px;
+}
+
+/* Card */
+
+.card-content{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    padding: 16px 16px;
+    border-radius: 8px 8px;
+    background-color: var(--secondary);
+    border: 1px solid var(--accent-color-5);
+}
+
+/* input */
+
+.input, .select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--accent-color-5);
+    border-radius: 8px;
+    font-family: var(--font-family-global);
+    color: var(--primary);
+}
+
+.input-file {
+    padding: 12px;
+    border: 2px dashed var(--accent-color-5);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.amount-wrapper, .rate-wrapper {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.percent {
+    padding: 10px 12px;
+    background: var(--accent-color-3);
+    border: 1px solid var(--accent-color-5);
+    border-radius: 8px;
+}
+
+.footer-action {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+}
+
+.btn-input {
+    padding: 8px 6px;
+    background: #0E5BA8;
+    border-radius: 12px;
+    color: var(--secondary);
+    border: none;
+}
+
+.btn-cancel {
+    padding: 10px 16px;
+    background: var(--accent-color-3);
+    border-radius: 8px;
+    color: var(--primary);
+    font-weight: 600;
+    border: 1px solid var(--accent-color-5);
+}
+
+.title-lg {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* SIDE PANEL WRAPPER */
+.side-panel-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    background: rgba(0,0,0,0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.25s ease;
+    z-index: 999;
+}
+
+/* PANEL */
+.side-panel {
+    position: fixed;
+    top: 0;
+    left: -600px;
+    width: 600px;
+    height: 100vh;
+    background: #fff;
+    box-shadow: 4px 0 15px rgba(0,0,0,0.15);
+    transition: left 0.25s ease;
+    z-index: 1000;
+    padding: 24px;
+    overflow-y: auto;
+}
+
+/* ACTIVE */
+.side-panel-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.side-panel.active {
+    left: 0;
 }

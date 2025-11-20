@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('financing_requests', function (Blueprint $table) {
             $table->id();
             $table->string('transaction_id')->unique();
-            $table->foreignId('branch_id')->nullable()->constrained('branches')->nullOnDelete();
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
 
             // BU Input
