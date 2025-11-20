@@ -639,12 +639,12 @@ box-shadow: 0 0 0 3px #18181833; /* efek stroke outside */
 .side-panel {
     position: fixed;
     top: 0;
-    left: -600px;
+    right: -600px;
     width: 600px;
     height: 100vh;
     background: #fff;
     box-shadow: 4px 0 15px rgba(0,0,0,0.15);
-    transition: left 0.25s ease;
+    transition: right 0.25s ease;
     z-index: 1000;
     padding: 24px;
     overflow-y: auto;
@@ -657,5 +657,5 @@ box-shadow: 0 0 0 3px #18181833; /* efek stroke outside */
 }
 
 .side-panel.active {
-    left: 0;
+    right: 0;
 }
