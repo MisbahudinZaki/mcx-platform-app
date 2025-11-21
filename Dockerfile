@@ -25,9 +25,13 @@ RUN mkdir -p storage/framework/{sessions,views,cache} \
 EXPOSE 8000
 
 # ENTRYPOINT untuk memastikan migrate/seed hanya jalan setelah env sudah dimuat
-CMD php artisan key:generate --force && \
-    php artisan config:cache && \
+CMD php artisan config:cache && \
     php artisan route:cache && \
+    for i in {1..10}; do \
+        php -r "new PDO('mysql:host=' . getenv('DB_HOST') . ';port=' . getenv('DB_PORT') . ';dbname=' . getenv('DB_DATABASE'), getenv('DB_USERNAME'), getenv('DB_PASSWORD'));" && break || \
+        echo 'Waiting for database...'; \
+        sleep 3; \
+    done; \
     php artisan migrate --force && \
     php artisan db:seed --force && \
     php artisan serve --host=0.0.0.0 --port=8000
