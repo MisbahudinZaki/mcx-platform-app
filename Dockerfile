@@ -20,10 +20,14 @@ RUN composer install --no-dev --optimize-autoloader
 # Laravel permissions
 RUN mkdir -p storage/framework/{sessions,views,cache} \
     && mkdir -p storage/logs \
-    && chown -R www-data:www-data storage bootstrap/cache
+    && chown -R www-data:www-data storage bootstrap/cache storage
 
 EXPOSE 8000
 
-CMD php artisan migrate --force && \
+# ENTRYPOINT untuk memastikan migrate/seed hanya jalan setelah env sudah dimuat
+CMD php artisan key:generate --force && \
+    php artisan config:cache && \
+    php artisan route:cache && \
+    php artisan migrate --force && \
     php artisan db:seed --force && \
     php artisan serve --host=0.0.0.0 --port=8000
