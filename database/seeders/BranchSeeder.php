@@ -11,9 +11,10 @@ class BranchSeeder extends Seeder
     /**
      * Run the database seeds.
      */
+
     public function run(): void
     {
-        DB::table('branches')->insert([
+        $branches = [
             [
                 'name' => 'Bank Mandiri Singapore',
                 'status' => 'Available',
@@ -80,6 +81,14 @@ class BranchSeeder extends Seeder
                 'remark' => null,
                 'match_confidence' => 25,
             ],
-        ]);
+        ];
+
+        foreach ($branches as $branch) {
+            DB::table('branches')->updateOrInsert(
+                ['name' => $branch['name']],
+                $branch
+            );
+        }
+
     }
 }
